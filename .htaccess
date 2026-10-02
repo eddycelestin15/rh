@@ -1,0 +1,41 @@
+RewriteEngine On
+
+# ---------------------------------------------------------------------------
+#  Pages d'erreur personnalisées
+#
+#  Volontairement limité à 403, 404 et 500 : les codes 400 et 401 sont produits
+#  par l'application elle-même (contrôle des champs obligatoires, garde de
+#  session) avec un corps JSON destiné au JavaScript. Y brancher un
+#  ErrorDocument HTML casserait ces réponses.
+# ---------------------------------------------------------------------------
+ErrorDocument 403 /errors/403.php
+ErrorDocument 404 /errors/404.php
+ErrorDocument 500 /errors/500.php
+
+# Pas de listing de dossier : on renvoie la page 403 plutôt qu'un index Apache.
+Options -Indexes
+
+# ---------------------------------------------------------------------------
+#  URL courtes vers les pages de connexion (dossier auth/)
+# ---------------------------------------------------------------------------
+RewriteRule ^administrateur/?$ auth/login_admin.php [L]
+RewriteRule ^responsable/?$    auth/login_responsable.php [L]
+RewriteRule ^agent/?$          auth/login_agent.php [L]
+RewriteRule ^inscription/?$    auth/inscription.php [L]
+RewriteRule ^register/?$    auth/register_agent.php [L]
+
+# ---------------------------------------------------------------------------
+#  Dossiers et fichiers non destinés à être servis directement.
+#  includes/ et _archive/ ont leur propre .htaccess.
+# ---------------------------------------------------------------------------
+RewriteRule ^cron/                 - [F,L]
+RewriteRule ^\.docker/             - [F,L]
+RewriteRule ^(composer\.(json|lock)|.*\.sql|.*\.log|.*\.md)$ - [F,L]
+
+# ---------------------------------------------------------------------------
+#  Réglages PHP (repris dans .docker/Dockerfile pour l'environnement Docker)
+# ---------------------------------------------------------------------------
+php_value memory_limit 512M
+php_value max_execution_time 300
+php_value upload_max_filesize 20M
+php_value post_max_size 20M

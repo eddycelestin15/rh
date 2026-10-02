@@ -1,0 +1,26 @@
+TRUNCATE TABLE personnel_situation_actuelle;
+TRUNCATE TABLE personnel_avancements;
+TRUNCATE TABLE demandes_numeros_dos;
+TRUNCATE TABLE bin_agent;
+TRUNCATE TABLE personnel_poste_actuel;
+TRUNCATE TABLE personnel_avenant;
+TRUNCATE TABLE avancement_successif;
+TRUNCATE TABLE alertes_notifications;
+TRUNCATE TABLE bin_agent;
+TRUNCATE TABLE notifications;
+TRUNCATE TABLE reponses_dos;
+TRUNCATE TABLE acte_formate;
+TRUNCATE TABLE acte_formate_avcont;
+TRUNCATE TABLE archives_bordereaux_dren;
+TRUNCATE TABLE archives_bordereaux_fop;
+TRUNCATE TABLE archives_bordereaux_solde;
+TRUNCATE TABLE archives_bordereaux_cde;
+TRUNCATE TABLE archives_bordereaux_prefet;
+TRUNCATE TABLE archives_bordereaux_drh;
+TRUNCATE TABLE archives_bordereaux_mtefop;
+TRUNCATE TABLE archives_bordereaux_primature;
+TRUNCATE TABLE sigle_bordereau;
+TRUNCATE TABLE suivi_agents_bordereau;
+
+TRUNCATE TABLE personnel_diplomes;
+TRUNCATE TABLE personnel_etat_civil;

@@ -1,0 +1,69 @@
+services:
+  db:
+    image: mysql:9.1
+    container_name: rh_db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: gestion_personnel
+      MYSQL_ROOT_HOST: '%'
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_general_ci
+      # Le dump provient de phpMyAdmin et contient des dates '0000-00-00'
+      # ainsi que des GROUP BY partiels : on relâche le mode strict.
+      - --sql-mode=NO_ENGINE_SUBSTITUTION
+    volumes:
+      - db_data:/var/lib/mysql
+      # Les .sql sont montés hors de initdb.d : c'est init-db.sh qui pilote l'ordre
+      # et tolère l'erreur connue du dump (cf. .docker/init-db.sh).
+      - ./database/gestion_personnel.sql:/sql/gestion_personnel.sql:ro
+      - ./.docker/fix-view-moteur-alertes.sql:/sql/fix-view-moteur-alertes.sql:ro
+      - ./.docker/dev-passwords.sql:/sql/dev-passwords.sql:ro
+      - ./.docker/init-db.sh:/docker-entrypoint-initdb.d/01-init-db.sh:ro
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 40
+      start_period: 30s
+
+  web:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    container_name: rh_web
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_NAME: gestion_personnel
+      DB_USER: root
+      DB_PASS: root
+      DB_PORT: '3306'
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "8080:80"
+
+  phpmyadmin:
+    image: phpmyadmin:5
+    container_name: rh_pma
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      PMA_HOST: db
+      PMA_USER: root
+      PMA_PASSWORD: root
+      UPLOAD_LIMIT: 64M
+    ports:
+      - "8081:80"
+
+volumes:
+  db_data:

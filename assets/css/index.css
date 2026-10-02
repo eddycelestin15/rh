@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+body { font-family: 'Plus Jakarta Sans', sans-serif; padding-right: 0 !important;}
+body.loading {
+    overflow: hidden !important;
+    height: 100vh !important;
+}
+
+.sidebar { 
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+    width: 280px; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 30;
+}
+
+.content-area { 
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
+    margin-left: 280px; 
+}
+
+body.menu-collapsed .sidebar { width: 85px; }
+body.menu-collapsed .content-area { margin-left: 85px; }
+body.menu-collapsed .menu-text, body.menu-collapsed .logo-text, body.menu-collapsed .role-info { display: none; }
+body.menu-collapsed .nav-item { justify-content: center; padding-left: 0; padding-right: 0; }
+body.menu-collapsed .section-title { text-align: center; font-size: 8px; }
+
+.badge {
+    position: absolute; top: -3px; right: -3px;
+    min-width: 18px; height: 18px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 800; border: 2px solid white;
+}
+
+#userDropdown { display: none; animation: slideUp 0.2s ease-out; }
+#userDropdown.show { display: block; }
+@keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.submenu-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+.submenu-content.open {
+    max-height: 200px; 
+}
+
+.nav-item-active {
+    position: relative;
+    background: #f0f9ff; 
+    color: #0ea5e9;    
+    font-weight: 700;
+}
+.nav-item-active::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 15%;
+    height: 70%;
+    background-color: #0ea5e9; 
+    border-radius: 0 4px 4px 0;
+}
+@keyframes flip-vertical {
+    0% {
+        transform: perspective(400px) rotateY(0deg);
+    }
+    100% {
+        transform: perspective(400px) rotateY(360deg);
+    }
+}
+.loader-logo {
+    width: 100px; 
+    height: auto;
+    animation: spin3D 2s infinite linear;
+    backface-visibility: visible;
+}
+
+@keyframes spin3D {
+    from {
+        transform: rotateY(0deg);
+    }
+    to {
+        transform: rotateY(360deg);
+    }
+}
+
+#refresh-loader {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background: white;
+    z-index: 99999; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; 
+    perspective: 1000px;
+}
+
+.loader-text {
+    margin-top: 20px;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #0284c7; 
+}

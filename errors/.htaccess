@@ -1,0 +1,3 @@
+# Ces pages sont servies par Apache via ErrorDocument, jamais appelees directement.
+# On autorise donc leur lecture, mais pas le listing du dossier.
+Options -Indexes

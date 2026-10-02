@@ -1,0 +1,2 @@
+# Fichiers inclus uniquement par du code PHP : jamais servis directement.
+Require all denied

@@ -1,0 +1,171 @@
+/* =========================================================
+   STYLISATION DATATABLES & MODALE (Style Unifié)
+   ========================================================= */
+
+/* Activation et gestion de la modale élargie pour éviter les retours à la ligne */
+.modal-active { 
+    display: flex !important; 
+}
+
+#modalHistorique > div {
+    max-width: 95vw !important; /* Élève la largeur max à 95% de l'écran */
+    width: 1400px !important;    /* Étire la modale en largeur */
+}
+
+/* Évite la mise à la ligne forcée dans toutes les cellules et en-têtes */
+#modalHistorique table#tableAvancements th,
+#modalHistorique table#tableAvancements td {
+    white-space: nowrap !important;
+}
+
+/* Retrait complet des bordures enveloppantes */
+#modalHistorique .overflow-x-auto,
+#modalHistorique table.dataTable,
+#modalHistorique table#tableAvancements {
+    border: none !important;
+    border-top: none !important;
+    box-shadow: none !important;
+}
+
+#modalHistorique table#tableAvancements thead tr {
+    border-top: none !important;
+}
+
+/* --- TYPOGRAPHIE ET STYLES DES CELLULES --- */
+
+/* Titres de colonnes : 16px, Texte en BLANC */
+#modalHistorique table#tableAvancements thead th {
+    font-size: 16px !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    background-color: #2563eb !important; /* Fond bleu */
+}
+
+/* Style unique pour les colonnes de DONNÉES (1 à 7) : 14px, police standard, texte noir */
+#modalHistorique table#tableAvancements tbody td:not(:last-child),
+#modalHistorique table#tableAvancements tbody td:not(:last-child) * {
+    font-size: 14px !important;
+    color: #000000 !important;
+    font-family: inherit !important;
+    font-weight: normal !important;
+    background: transparent !important;
+    border: none !important;
+}
+
+#modalHistorique table#tableAvancements tbody td {
+    padding: 0.75rem 1rem !important;
+}
+
+/* Restauration du style des boutons et icônes d'actions (Dernière colonne) */
+#modalHistorique table#tableAvancements tbody td:last-child button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+#modalHistorique table#tableAvancements tbody td:last-child i {
+    font-size: 14px !important;
+}
+
+/* 1. BARRE DE RECHERCHE ET LOUPE */
+#modalHistorique .dt-container .dt-search,
+#modalHistorique .dataTables_filter {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    margin-bottom: 1rem !important;
+}
+
+#modalHistorique .dt-search label,
+#modalHistorique .dataTables_filter label {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    font-size: 0 !important;
+    color: transparent !important;
+    margin: 0 !important;
+}
+
+#modalHistorique .dt-search input,
+#modalHistorique .dataTables_filter input {
+    width: 260px !important;
+    height: 2.35rem !important;
+    padding: 0.5rem 0.75rem 0.5rem 2.25rem !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 0.5rem !important;
+    outline: none !important;
+    font-size: 0.875rem !important;
+    color: #1e293b !important;
+    background-color: #ffffff !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='2' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607z' /%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: 0.65rem center !important;
+    background-size: 1rem 1rem !important;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+    transition: all 0.2s ease !important;
+}
+
+#modalHistorique .dt-search input:focus,
+#modalHistorique .dataTables_filter input:focus {
+    border-color: #2563eb !important;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
+}
+
+/* 2. BOUTONS DE PAGINATION EN ROND BLEU */
+#modalHistorique .dt-paging,
+#modalHistorique .dataTables_paginate {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    gap: 0.35rem !important;
+    margin-top: 1rem !important;
+}
+
+#modalHistorique .dt-paging .dt-paging-button,
+#modalHistorique .dataTables_paginate .paginate_button,
+#modalHistorique .dt-paging button.dt-paging-button {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-width: 2.25rem !important;
+    height: 2.25rem !important;
+    padding: 0 0.5rem !important;
+    border-radius: 9999px !important;
+    border: 1px solid #e2e8f0 !important;
+    background: #ffffff !important;
+    color: #475569 !important;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
+}
+
+#modalHistorique .dt-paging .dt-paging-button:hover:not(.current):not(.disabled),
+#modalHistorique .dataTables_paginate .paginate_button:hover:not(.current):not(.disabled) {
+    background-color: #eff6ff !important;
+    border-color: #93c5fd !important;
+    color: #2563eb !important;
+}
+
+#modalHistorique .dt-paging .dt-paging-button.current,
+#modalHistorique .dt-paging .dt-paging-button.current:hover,
+#modalHistorique .dataTables_paginate .paginate_button.current,
+#modalHistorique .dataTables_paginate .paginate_button.current:hover {
+    background-color: #2563eb !important;
+    background: #2563eb !important;
+    border-color: #2563eb !important;
+    color: #ffffff !important;
+    border-radius: 9999px !important;
+    box-shadow: 0 2px 4px rgba(37, 99, 235, 0.3) !important;
+}
+
+#modalHistorique .dt-paging .dt-paging-button.disabled,
+#modalHistorique .dataTables_paginate .paginate_button.disabled {
+    opacity: 0.4 !important;
+    cursor: not-allowed !important;
+    background: #f8fafc !important;
+    border-color: #e2e8f0 !important;
+    color: #94a3b8 !important;
+}

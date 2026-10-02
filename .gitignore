@@ -1,0 +1,21 @@
+# Dépendances installées par Composer
+/vendor/
+
+# Journaux
+*.log
+/logs/
+
+# Fichiers temporaires bureautiques
+~$*
+
+# Code mort conservé pour référence
+/_archive/
+
+# Uploads et fichiers générés
+/uploads/*
+!/uploads/.gitkeep
+
+# Node / Python
+/node_modules/
+__pycache__/
+*.pyc
