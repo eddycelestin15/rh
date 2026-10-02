@@ -1,0 +1,36 @@
+# Image de production : le code est copié dans l'image (pas de bind mount),
+# les dépendances Composer sont installées, les erreurs PHP ne sont pas affichées.
+FROM php:8.3-apache
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libfreetype6-dev libjpeg62-turbo-dev libpng-dev libzip-dev \
+        libicu-dev libxml2-dev libonig-dev unzip \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j"$(nproc)" pdo_mysql mysqli gd zip intl mbstring opcache
+
+RUN { \
+        echo 'memory_limit = 512M'; \
+        echo 'max_execution_time = 300'; \
+        echo 'upload_max_filesize = 20M'; \
+        echo 'post_max_size = 20M'; \
+        echo 'display_errors = Off'; \
+        echo 'log_errors = On'; \
+        echo 'error_reporting = E_ALL'; \
+        echo 'date.timezone = Indian/Antananarivo'; \
+    } > /usr/local/etc/php/conf.d/zz-app.ini
+
+RUN a2enmod rewrite remoteip \
+    && printf '<Directory /var/www/html>\n\tAllowOverride All\n\tRequire all granted\n</Directory>\n' \
+        > /etc/apache2/conf-available/app-override.conf \
+    && a2enconf app-override
+
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www/html
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader --no-scripts
+
+COPY . .
+RUN mkdir -p uploads && chown -R www-data:www-data uploads

@@ -128,3 +128,18 @@ aucun endpoint n'emet de `Warning`, `Notice`, `Deprecated` ni d'erreur fatale.
 | `.docker/smoke-test.sh` | Parcourt les 109 pages/endpoints avec un compte donne (suit les redirections) |
 | `.docker/audit_sql.py` | Recense les requetes SQL construites avec des variables |
 | `.docker/audit_sql_taint.py` | Isole celles ou la variable vient d'une entree utilisateur |
+
+## Production (Traefik)
+
+`docker-compose.prod.yml` + `.docker/Dockerfile.prod` : le code est embarqué dans l'image,
+MySQL reste sur un réseau privé, l'application est exposée uniquement via Traefik
+(réseau externe `traefik-network`, certificat `letsencrypt`) sur
+`ressource-humaine.flycelest.com` (à changer dans les labels `traefik.http.routers.rh.rule`).
+
+```bash
+cp .env.example .env        # puis définir MYSQL_ROOT_PASSWORD
+docker compose -f docker-compose.prod.yml up -d --build
+```
+
+Au premier démarrage le dump est importé **sans** les mots de passe de test :
+les comptes gardent leurs mots de passe d'origine.

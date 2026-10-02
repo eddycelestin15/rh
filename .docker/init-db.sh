@@ -23,8 +23,13 @@ echo "[init-db] 1/3 — import du dump (les erreurs connues sont ignorées)…"
 echo "[init-db] 2/3 — recréation de la vue v_moteur_alertes…"
 "${MYSQL[@]}" < /sql/fix-view-moteur-alertes.sql
 
-echo "[init-db] 3/3 — mots de passe de développement…"
-"${MYSQL[@]}" < /sql/dev-passwords.sql
+# Monté uniquement par docker-compose.yml (dev) ; jamais en production.
+if [ -f /sql/dev-passwords.sql ]; then
+    echo "[init-db] 3/3 — mots de passe de développement…"
+    "${MYSQL[@]}" < /sql/dev-passwords.sql
+else
+    echo "[init-db] 3/3 — mots de passe de développement : ignoré (production)."
+fi
 
 # Garde-fou : l'init doit échouer si la vue n'a pas été créée.
 count=$("${MYSQL[@]}" -N -B -e "SELECT COUNT(*) FROM information_schema.views WHERE table_schema='${MYSQL_DATABASE}' AND table_name='v_moteur_alertes';")
