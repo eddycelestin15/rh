@@ -60,7 +60,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik-network"
-      - "traefik.http.routers.rh.rule=Host(`ressource-humaine.flycelest.com`)"
+      - "traefik.http.routers.rh.rule=Host(`rh.flycelest.com`)"
       - "traefik.http.routers.rh.entrypoints=websecure"
       - "traefik.http.routers.rh.tls=true"
       - "traefik.http.routers.rh.tls.certresolver=letsencrypt"

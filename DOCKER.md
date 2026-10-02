@@ -134,7 +134,7 @@ aucun endpoint n'emet de `Warning`, `Notice`, `Deprecated` ni d'erreur fatale.
 `docker-compose.prod.yml` + `.docker/Dockerfile.prod` : le code est embarqué dans l'image,
 MySQL reste sur un réseau privé, l'application est exposée uniquement via Traefik
 (réseau externe `traefik-network`, certificat `letsencrypt`) sur
-`ressource-humaine.flycelest.com` (à changer dans les labels `traefik.http.routers.rh.rule`).
+`rh.flycelest.com` (à changer dans les labels `traefik.http.routers.rh.rule`).
 
 ```bash
 cp .env.example .env        # puis définir MYSQL_ROOT_PASSWORD
