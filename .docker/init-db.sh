@@ -13,7 +13,10 @@
 #    2. la vue est recréée correctement ;
 #    3. les mots de passe de développement sont posés.
 # =====================================================================
-set -euo pipefail
+# Ce fichier est « sourcé » par l'entrypoint MySQL : les options du shell fuient
+# vers lui. On les active ici et on les rétablit à la fin (sinon « set -u » fait
+# planter l'entrypoint sur MYSQL_ONETIME_PASSWORD).
+set -eo pipefail
 
 MYSQL=(mysql --protocol=socket -uroot -p"${MYSQL_ROOT_PASSWORD}" --default-character-set=utf8mb4 "${MYSQL_DATABASE}")
 
@@ -39,3 +42,4 @@ if [ "$count" != "1" ]; then
 fi
 
 echo "[init-db] Terminé : base prête."
+set +eo pipefail
